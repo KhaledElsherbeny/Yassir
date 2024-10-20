@@ -8,106 +8,94 @@
 import UIKit
 import Combine
 
-import UIKit
-import Combine
-
-class CharacterListView: UIViewController {
+final class CharacterListView: UIViewController {
     
-    @IBOutlet private(set) var tableView: UITableView!
+    // MARK: - Outlets
+    @IBOutlet weak private(set) var tableView: UITableView!
+    @IBOutlet weak private(set) var filterContainerView: CharacterFilterView!
+    
+    // MARK: - Properties
     var viewModel: CharacterListViewModel!
-    
     private var cancellables = Set<AnyCancellable>()
-
+    
+    // MARK: - Initialization
+    init(viewModel: CharacterListViewModel) {
+        super.init(nibName: nil, bundle: nil)
+        self.viewModel = viewModel
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupTableView()
-        
-        let service = CharactersService()
-        let repository = CharacterListRepository(charactersService: service)
-        let useCase = CharacterListUsecase(characterListRepository: repository)
-        viewModel = CharacterListViewModel(useCase: useCase)
-        
+        setupNavigationTitle()
+        setupFilterView()
         bindViewModel()
-        
-        // Optionally, fetch characters initially
-        viewModel.fetchCharacters(at: 1) // or any page number you want to start with
+        viewModel?.fetchCharacters()
     }
-
-    private func setupTableView() {
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(
-            CharacterItemTableViewCell.nib,
-            forCellReuseIdentifier: CharacterItemTableViewCell.viewIdentifier
-        )
+    
+    // MARK: - Setup Methods
+    private func setupNavigationTitle() {
+        navigationItem.title = "Characters"
+        navigationItem.largeTitleDisplayMode = .always
     }
-
+    
+    private func setupFilterView() {
+        filterContainerView.setup(filters: viewModel?.filters ?? [], delegate: self)
+    }
+    
+    // MARK: - Binding
     private func bindViewModel() {
-        // Bind characters array to update the table view
-        viewModel.$characters
+        // Bind filtered characters array to update the table view
+        viewModel?.$filteredCharacters
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.tableView.reloadData()
             }
             .store(in: &cancellables)
         
-        // Bind isLoading state to show/hide the loading spinner
-        viewModel.$isLoading
+        // Bind state changes
+        viewModel.$state
             .receive(on: DispatchQueue.main)
-            .sink { isLoading in
-                if isLoading {
-                    LoadingView.show()
-                } else {
-                    LoadingView.hide()
-                }
-            }
-            .store(in: &cancellables)
-        
-        // Bind errorMessage to show an alert if there is an error
-        viewModel.$errorMessage
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] errorMessage in
-                guard let message = errorMessage, !message.isEmpty else { return }
-                self?.showErrorMessage(message: message)
+            .sink { [weak self] state in
+                self?.handleStateChange(state)
             }
             .store(in: &cancellables)
     }
-
+    
+    // MARK: - Private Methods
+    private func handleStateChange(_ state: CharacterListState) {
+        switch state {
+        case .idle:
+            LoadingView.hide()
+        case .loading:
+            LoadingView.show()
+        case .error(let message):
+            LoadingView.hide()
+            showErrorMessage(message: message)
+        }
+    }
+    
     private func showErrorMessage(message: String) {
         let alertController = AlertBuilder(
             title: "Error",
             message: message,
             preferredStyle: .alert
         )
-        .addAction(title: "Ok", style: .default, handler: nil)
-        .build()
-
+            .addAction(title: "Ok", style: .default, handler: nil)
+            .build()
+        
         present(alertController, animated: true, completion: nil)
     }
 }
 
-// MARK: - UITableViewDataSource
-
-extension CharacterListView: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.characters.count // Return the number of characters
+// MARK: - CharacterFilterViewDelegate Extension
+extension CharacterListView: CharacterFilterViewDelegate {
+    func didPressFilter(filter: CharacterFilterItem, at index: IndexPath) {
+        viewModel.applyFilter(filter, at: index.row)
     }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = CharacterItemTableViewCell.instance(tableView, indexPath: indexPath) else {
-            return UITableViewCell()
-        }
-        let character = viewModel.characters[indexPath.row]
-        cell.setup(with: character)
-        cell.selectionStyle = .none
-        return cell
-    }
-}
-
-// MARK: - UITableViewDelegate
-
-extension CharacterListView: UITableViewDelegate {
-    // Implement UITableViewDelegate methods if needed
 }

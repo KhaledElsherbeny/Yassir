@@ -22,9 +22,9 @@ struct CharacterListItemDTO: Codable {
     let id: Int?
     let name: String?
     let status: Status?
-    let species: Species?
+    let species: String?
     let type: String?
-    let gender: Gender?
+    let gender: String?
     let origin, location: Location?
     let image: String?
     let episode: [String]?
@@ -32,20 +32,9 @@ struct CharacterListItemDTO: Codable {
     let created: String?
 }
 
-enum Gender: String, Codable {
-    case female = "Female"
-    case male = "Male"
-    case unknown = "unknown"
-}
-
 struct Location: Codable {
     let name: String?
     let url: String?
-}
-
-enum Species: String, Codable {
-    case alien = "Alien"
-    case human = "Human"
 }
 
 enum Status: String, Codable {

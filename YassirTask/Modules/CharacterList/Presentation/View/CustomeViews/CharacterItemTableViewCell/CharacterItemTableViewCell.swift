@@ -29,9 +29,9 @@ final class CharacterItemTableViewCell: UITableViewCell {
         self.imageDownloader = imageDownloader
         
         characterNameLabel.text = character.name
-        characterSpeciesLabel.text = character.species?.rawValue
+        characterSpeciesLabel.text = character.species
         characterStatusLabel.text = character.status?.rawValue
-        characterGenderLabel.text = character.gender?.rawValue
+        characterGenderLabel.text = character.gender
         
         if let image = character.image, let imageURL = URL(string: image) {
             downloadImage(url: imageURL)

@@ -8,32 +8,100 @@
 import Foundation
 import Combine
 
-final class CharacterListViewModel: ObservableObject {
-    @Published var characters: [CharacterListItem] = []
-    @Published var errorMessage: String?
-    @Published var isLoading: Bool = false
+// MARK: - State Enum
+enum CharacterListState: Equatable {
+    case idle
+    case loading
+    case error(String)
+}
 
-    private var cancellables = Set<AnyCancellable>()
-    var useCase: CharacterListUsecaseProtocol
+// MARK: - View Model Implementation
+final class CharacterListViewModel: ObservableObject {
+    // MARK: - Published Properties
+    private var characters: [CharacterListItem] = []
+    @Published private(set) var filteredCharacters: [CharacterListItem] = []
+    @Published private(set) var state: CharacterListState = .idle
+    @Published private(set) var filters: [CharacterFilterItem]
     
-    init(useCase: CharacterListUsecaseProtocol) {
+    // MARK: - Private Properties
+    private let useCase: CharacterListUsecaseProtocol
+    private let coordinator: CharacterListCoordinator
+    private var cancellables = Set<AnyCancellable>()
+    
+    // MARK: - Initialization
+    init(useCase: CharacterListUsecaseProtocol, coordinator: CharacterListCoordinator) {
         self.useCase = useCase
+        self.coordinator = coordinator
+        self.filters = CharacterFilterItem.defaultFilters()
+        filteredCharacters = characters  // Initialize filtered characters with all characters
     }
     
-    func fetchCharacters(at page: Int) {
-        isLoading = true
-        useCase.fetchCharacters(at: page)
+    // MARK: - Public Methods
+    func fetchCharacters() {
+        if case .loading = state { return }
+        
+        state = .loading
+        
+        useCase.fetchCharacters()
+            .receive(on: DispatchQueue.main)
             .sink(
-                receiveCompletion: { [weak self] completion in
-                    self?.isLoading = false // Ensure loading is stopped on completion
-                    if case .failure(let error) = completion {
-                        self?.errorMessage = error.localizedDescription
-                    }
-                },
-                receiveValue: { [weak self] characterList in
-                    self?.characters = characterList.characters ?? [] // Safely unwrap characters
-                }
+                receiveCompletion: { [weak self] in self?.handleCompletion($0) },
+                receiveValue: { [weak self] in self?.handleNewCharacters($0) }
             )
             .store(in: &cancellables)
+    }
+    
+    func fetchMoreCharactersIfNeeded() {
+        guard useCase.hasMoreCharacters else { return }
+        fetchCharacters()
+    }
+    
+    func resetPagination() {
+        useCase.resetPagination()
+        characters.removeAll()
+        fetchCharacters()
+    }
+    
+    func applyFilter(_ filter: CharacterFilterItem, at index: Int) {
+        // Update the filter at the specified index
+        filters[index] = filter
+        
+        if filter.isSelected {
+            // If the filter is selected, apply it
+            filteredCharacters = characters.filter { $0.status == filter.status }
+            
+            // Deselect other filters
+            for i in filters.indices where i != index {
+                filters[i].isSelected = false
+            }
+        } else {
+            // If the filter is deselected, show all characters
+            filteredCharacters = characters
+        }
+    }
+    
+    // MARK: - Private Methods
+    private func handleCompletion(_ completion: Subscribers.Completion<NetworkError>) {
+        switch completion {
+        case .finished:
+            state = .idle
+        case .failure(let error):
+            state = .error(error.localizedDescription)
+        }
+    }
+    
+    private func handleNewCharacters(_ newCharacters: [CharacterListItem]) {
+        characters.append(contentsOf: newCharacters)
+        updateFilteredCharacters()
+    }
+    
+    private func updateFilteredCharacters() {
+        // Check if there's any selected filter
+        if let activeFilter = filters.first(where: { $0.isSelected }) {
+            filteredCharacters = characters.filter { $0.status == activeFilter.status }
+        } else {
+            // If no filter is selected, show all characters
+            filteredCharacters = characters
+        }
     }
 }

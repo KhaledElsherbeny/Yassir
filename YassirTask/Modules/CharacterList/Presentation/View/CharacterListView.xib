@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharacterListView" customModule="YassirTask" customModuleProvider="target">
             <connections>
+                <outlet property="filterContainerView" destination="7a0-50-tlx" id="db9-bH-gJo"/>
                 <outlet property="tableView" destination="6FB-59-Nw5" id="uJS-eZ-YwO"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Hg1-ky-6wA"/>
             </connections>
@@ -19,18 +20,30 @@
             <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6FB-59-Nw5">
-                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                </tableView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Eug-Cf-1ba">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7a0-50-tlx" customClass="CharacterFilterView" customModule="YassirTask" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="65"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="65" id="UjG-Vu-QP6"/>
+                            </constraints>
+                        </view>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6FB-59-Nw5">
+                            <rect key="frame" x="0.0" y="75" width="393" height="684"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        </tableView>
+                    </subviews>
+                </stackView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="6FB-59-Nw5" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="3aX-WJ-ChZ"/>
-                <constraint firstAttribute="bottom" secondItem="6FB-59-Nw5" secondAttribute="bottom" id="4fI-gS-OTS"/>
-                <constraint firstItem="6FB-59-Nw5" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Hll-gb-uYW"/>
-                <constraint firstItem="6FB-59-Nw5" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="S5C-oF-pln"/>
+                <constraint firstItem="Eug-Cf-1ba" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" id="00X-7N-hTs"/>
+                <constraint firstAttribute="bottomMargin" secondItem="Eug-Cf-1ba" secondAttribute="bottom" id="Ws5-2c-1op"/>
+                <constraint firstItem="Eug-Cf-1ba" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="bPe-aj-2hr"/>
+                <constraint firstItem="Eug-Cf-1ba" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="cI2-0H-Z3a"/>
             </constraints>
             <point key="canvasLocation" x="90.839694656488547" y="19.718309859154932"/>
         </view>

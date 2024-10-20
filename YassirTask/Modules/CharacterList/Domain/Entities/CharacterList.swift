@@ -14,24 +14,18 @@ struct CharacterList {
 
 extension CharacterList {
     init(response: CharacterListDTO) {
-        pagingInfo = nil
+        pagingInfo = CharacterListPageInfo(response: response.info)
         characters = response.results?.map({ CharacterListItem(response: $0) }) ?? []
     }
-}
-
-struct CharacterListPageInfo {
-    var count, pages: Int?
-    var next: String?
-    var prev: String?
 }
 
 struct CharacterListItem {
     var id: Int
     var name: String
     var status: Status?
-    var species: Species?
+    var species: String?
     var type: String?
-    var gender: Gender?
+    var gender: String?
     var origin, location: Location?
     var image: String?
     var episode: [String]?
@@ -54,3 +48,15 @@ extension CharacterListItem {
     }
 }
 
+struct CharacterListPageInfo {
+    var count, pages: Int?
+    var next: String?
+    var prev: String?
+    
+    init(response: CharacterListPageInfoDTO?) {
+        self.count = response?.count
+        self.pages = response?.pages
+        self.next = response?.next
+        self.prev = response?.prev
+    }
+}
