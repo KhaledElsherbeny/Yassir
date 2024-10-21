@@ -11,7 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CharacterListView" customModule="YassirTask" customModuleProvider="target">
             <connections>
                 <outlet property="filterContainerView" destination="7a0-50-tlx" id="db9-bH-gJo"/>
-                <outlet property="tableView" destination="6FB-59-Nw5" id="uJS-eZ-YwO"/>
+                <outlet property="tableView" destination="aHY-CW-TPy" id="w1p-NH-O0h"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Hg1-ky-6wA"/>
             </connections>
         </placeholder>
@@ -30,7 +30,7 @@
                                 <constraint firstAttribute="height" constant="65" id="UjG-Vu-QP6"/>
                             </constraints>
                         </view>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="6FB-59-Nw5">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="aHY-CW-TPy">
                             <rect key="frame" x="0.0" y="75" width="393" height="684"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>

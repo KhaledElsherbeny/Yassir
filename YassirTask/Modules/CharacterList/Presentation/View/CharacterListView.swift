@@ -35,7 +35,12 @@ final class CharacterListView: UIViewController {
         setupNavigationTitle()
         setupFilterView()
         bindViewModel()
-        viewModel?.fetchCharacters()
+        viewModel.fetchCharacters()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     // MARK: - Setup Methods
@@ -51,7 +56,7 @@ final class CharacterListView: UIViewController {
     // MARK: - Binding
     private func bindViewModel() {
         // Bind filtered characters array to update the table view
-        viewModel?.$filteredCharacters
+        viewModel.$filteredCharacters
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in
                 self?.tableView.reloadData()

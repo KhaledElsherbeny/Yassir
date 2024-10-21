@@ -25,15 +25,18 @@ final class CharacterListViewModel: ObservableObject {
     
     // MARK: - Private Properties
     private let useCase: CharacterListUsecaseProtocol
-    private let coordinator: CharacterListCoordinator
+    private let coordinator: CharacterListCoordinatorProtocol
     private var cancellables = Set<AnyCancellable>()
     
     // MARK: - Initialization
-    init(useCase: CharacterListUsecaseProtocol, coordinator: CharacterListCoordinator) {
+    init(
+        useCase: CharacterListUsecaseProtocol,
+        coordinator: CharacterListCoordinatorProtocol
+    ) {
         self.useCase = useCase
         self.coordinator = coordinator
         self.filters = CharacterFilterItem.defaultFilters()
-        filteredCharacters = characters  // Initialize filtered characters with all characters
+        self.filteredCharacters = characters  // Initialize filtered characters with all characters
     }
     
     // MARK: - Public Methods
@@ -103,5 +106,12 @@ final class CharacterListViewModel: ObservableObject {
             // If no filter is selected, show all characters
             filteredCharacters = characters
         }
+    }
+}
+
+extension CharacterListViewModel {
+    func didSelectCharacter(_ index: Int) {
+        let character = filteredCharacters[index]
+        coordinator.showCharacterDetails(character: character)
     }
 }

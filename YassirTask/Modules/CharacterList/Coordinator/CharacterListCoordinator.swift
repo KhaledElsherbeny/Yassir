@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol CharacterListCoordinatorProtocol {
+    func showCharacterDetails(character: CharacterListItem)
+}
+
 final class CharacterListCoordinator: Coordinator {
     var navigationController: UINavigationController
     
@@ -21,5 +25,12 @@ final class CharacterListCoordinator: Coordinator {
         let viewModel = CharacterListViewModel(useCase: useCase, coordinator: self)
         let characterListVC = CharacterListView(viewModel: viewModel)
         navigationController.pushViewController(characterListVC, animated: true)
+    }
+}
+
+extension CharacterListCoordinator: CharacterListCoordinatorProtocol {
+    func showCharacterDetails(character: CharacterListItem) {
+        let detailsCoordinator = CharacterDetailsCoordinator(navigationController: navigationController, character: character)
+        detailsCoordinator.start()
     }
 }

@@ -24,6 +24,10 @@
 		E9384C702CC5B77E004D65DC /* CharacterFilterItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9384C6D2CC5B77E004D65DC /* CharacterFilterItemCell.swift */; };
 		E9384C742CC5BFA2004D65DC /* CharacterFilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9384C732CC5BFA2004D65DC /* CharacterFilterItem.swift */; };
 		E9384C762CC5BFC6004D65DC /* CharacterFilterItemCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9384C752CC5BFC6004D65DC /* CharacterFilterItemCellViewModel.swift */; };
+		E9384C7A2CC5D06C004D65DC /* CharacterDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9384C792CC5D06C004D65DC /* CharacterDetailsView.xib */; };
+		E9384C7B2CC5D06C004D65DC /* CharacterDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9384C782CC5D06C004D65DC /* CharacterDetailsView.swift */; };
+		E9384C7D2CC5D6FE004D65DC /* CharacterDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9384C7C2CC5D6FE004D65DC /* CharacterDetailsViewModel.swift */; };
+		E9384C7F2CC5D724004D65DC /* CharacterDetailsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9384C7E2CC5D724004D65DC /* CharacterDetailsCoordinator.swift */; };
 		E99396262CC5471D006CBC7A /* CharacterListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E99396252CC5471D006CBC7A /* CharacterListView.xib */; };
 		E99396292CC548C9006CBC7A /* ReusableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99396282CC548C9006CBC7A /* ReusableViewProtocol.swift */; };
 		E993962C2CC54978006CBC7A /* CharacterItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E993962B2CC54978006CBC7A /* CharacterItemTableViewCell.xib */; };
@@ -68,6 +72,10 @@
 		E9384C6E2CC5B77E004D65DC /* CharacterFilterItemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterFilterItemCell.xib; sourceTree = "<group>"; };
 		E9384C732CC5BFA2004D65DC /* CharacterFilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFilterItem.swift; sourceTree = "<group>"; };
 		E9384C752CC5BFC6004D65DC /* CharacterFilterItemCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterFilterItemCellViewModel.swift; sourceTree = "<group>"; };
+		E9384C782CC5D06C004D65DC /* CharacterDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsView.swift; sourceTree = "<group>"; };
+		E9384C792CC5D06C004D65DC /* CharacterDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterDetailsView.xib; sourceTree = "<group>"; };
+		E9384C7C2CC5D6FE004D65DC /* CharacterDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsViewModel.swift; sourceTree = "<group>"; };
+		E9384C7E2CC5D724004D65DC /* CharacterDetailsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterDetailsCoordinator.swift; sourceTree = "<group>"; };
 		E99396252CC5471D006CBC7A /* CharacterListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CharacterListView.xib; sourceTree = "<group>"; };
 		E99396282CC548C9006CBC7A /* ReusableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViewProtocol.swift; sourceTree = "<group>"; };
 		E993962A2CC54978006CBC7A /* CharacterItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterItemTableViewCell.swift; sourceTree = "<group>"; };
@@ -182,6 +190,33 @@
 			path = CharacterItemTableViewCell;
 			sourceTree = "<group>";
 		};
+		E9384C772CC5D040004D65DC /* CharacterDetails */ = {
+			isa = PBXGroup;
+			children = (
+				E96945352CC5DBC6001D25AC /* Presentation */,
+				E96945362CC5DBD7001D25AC /* Coordinator */,
+			);
+			path = CharacterDetails;
+			sourceTree = "<group>";
+		};
+		E96945352CC5DBC6001D25AC /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				E9384C782CC5D06C004D65DC /* CharacterDetailsView.swift */,
+				E9384C792CC5D06C004D65DC /* CharacterDetailsView.xib */,
+				E9384C7C2CC5D6FE004D65DC /* CharacterDetailsViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		E96945362CC5DBD7001D25AC /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				E9384C7E2CC5D724004D65DC /* CharacterDetailsCoordinator.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		E99396242CC546D9006CBC7A /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,11 +258,11 @@
 		E9F69D5A2CBBCF13001B0B00 /* YassirTask */ = {
 			isa = PBXGroup;
 			children = (
-				E9384C5F2CC5AAF4004D65DC /* Coordinator */,
-				E99396272CC548BE006CBC7A /* Helpers */,
-				E9F69D842CBBE557001B0B00 /* Modules */,
 				E9F69D832CBBE545001B0B00 /* AppDelegate */,
+				E99396272CC548BE006CBC7A /* Helpers */,
 				E9F69D7A2CBBCF58001B0B00 /* Network */,
+				E9384C5F2CC5AAF4004D65DC /* Coordinator */,
+				E9F69D842CBBE557001B0B00 /* Modules */,
 				E9F69D642CBBCF15001B0B00 /* Assets.xcassets */,
 				E9F69D662CBBCF15001B0B00 /* LaunchScreen.storyboard */,
 				E9F69D692CBBCF15001B0B00 /* Info.plist */,
@@ -288,6 +323,7 @@
 		E9F69D842CBBE557001B0B00 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E9384C772CC5D040004D65DC /* CharacterDetails */,
 				E9F69DE32CBBE7DC001B0B00 /* CharacterList */,
 			);
 			path = Modules;
@@ -446,6 +482,7 @@
 				E9F69D682CBBCF15001B0B00 /* Base in Resources */,
 				E99396262CC5471D006CBC7A /* CharacterListView.xib in Resources */,
 				E993962C2CC54978006CBC7A /* CharacterItemTableViewCell.xib in Resources */,
+				E9384C7A2CC5D06C004D65DC /* CharacterDetailsView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,8 +496,11 @@
 				E9F69DE82CBBE7DC001B0B00 /* CharacterList.swift in Sources */,
 				E9F69D812CBBCF58001B0B00 /* NetworkService.swift in Sources */,
 				E9384C5D2CC5A736004D65DC /* CharacterListView+TableView.swift in Sources */,
+				E9384C7B2CC5D06C004D65DC /* CharacterDetailsView.swift in Sources */,
 				E9F69DEA2CBBE7DC001B0B00 /* CharacterListUsecase.swift in Sources */,
+				E9384C7D2CC5D6FE004D65DC /* CharacterDetailsViewModel.swift in Sources */,
 				E9384C512CC54FAE004D65DC /* ImageDownloader.swift in Sources */,
+				E9384C7F2CC5D724004D65DC /* CharacterDetailsCoordinator.swift in Sources */,
 				E9F69D7F2CBBCF58001B0B00 /* NetworkLogger.swift in Sources */,
 				E9384C572CC55728004D65DC /* LoaderView.swift in Sources */,
 				E9384C702CC5B77E004D65DC /* CharacterFilterItemCell.swift in Sources */,

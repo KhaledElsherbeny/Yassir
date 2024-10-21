@@ -46,5 +46,9 @@ extension CharacterListView: UITableViewDelegate {
             viewModel.fetchMoreCharactersIfNeeded()
         }
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        viewModel.didSelectCharacter(indexPath.row)
+    }
 }
 
