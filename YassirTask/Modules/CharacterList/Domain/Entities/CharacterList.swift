@@ -33,6 +33,13 @@ struct CharacterListItem {
 }
 
 extension CharacterListItem {
+    init(id: Int, name: String) {
+        self.id = id
+        self.name = name
+    }
+}
+
+extension CharacterListItem {
     init(response: CharacterListItemDTO) {
         self.id = response.id ?? 0
         self.name = response.name ?? ""
@@ -52,11 +59,21 @@ struct CharacterListPageInfo {
     var count, pages: Int?
     var next: String?
     var prev: String?
-    
+}
+
+extension CharacterListPageInfo {
+    init(count: Int, pages: Int) {
+        self.count = count
+        self.pages = pages
+    }
+}
+
+extension CharacterListPageInfo {
     init(response: CharacterListPageInfoDTO?) {
         self.count = response?.count
         self.pages = response?.pages
         self.next = response?.next
         self.prev = response?.prev
     }
+
 }
